@@ -4,10 +4,12 @@ import com.rajan.employeespringboot.dao.EmployeeImpl;
 import com.rajan.employeespringboot.model.Employee;
 import com.rajan.employeespringboot.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Transactional
 @RestController
 public class EmployeeController {
 
@@ -24,7 +26,7 @@ public class EmployeeController {
         return employeeimpl.getEmployee(emp_no);
     }
 
-    @PostMapping(value = "/employee")                   //Insert Operation
+    @PostMapping(value = "/employee")                   //Insert Operation through request body
     public String saveEmployee(@RequestBody Employee employee){
         Integer res =  employeeimpl.saveEmployee(employee);
         if(res == 1)
@@ -49,5 +51,12 @@ public class EmployeeController {
             return "Record deleted successfully";
         else
             return "Record not deleted";
+    }
+
+    //http://localhost:8080/employeebyparam?emp_no=1
+
+    @RequestMapping(value = "/employeebyparam")       //Get employee by request param Emp_no
+    public Employee getEmploye(@RequestParam Integer emp_no){
+        return employeeimpl.getEmployee(emp_no);
     }
 }
