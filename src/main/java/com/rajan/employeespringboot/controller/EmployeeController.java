@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 @RestController
@@ -57,6 +58,16 @@ public class EmployeeController {
 
     @RequestMapping(value = "/employeebyparam")       //Get employee by request param Emp_no
     public Employee getEmploye(@RequestParam Integer emp_no){
+        return employeeimpl.getEmployee(emp_no);
+    }
+    
+    @RequestMapping(value = "/combinedemployees")               //Get all employees
+    public List<Map<String, Object>> getCombinedEmployees(){
+        return employeeimpl.getCombinedEmployees();
+    }
+    
+    @RequestMapping(value = "/combinedemployees/{emp_no}")       //Get employee by Emp_no
+    public Employee getCombinedEmployeesById(@PathVariable Integer emp_no){
         return employeeimpl.getEmployee(emp_no);
     }
 }
